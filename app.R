@@ -17,14 +17,14 @@ suppressMessages(library(stringr))
 #     str_subset('\\.R') %>%
 #     walk(~source(.x,  local = TRUE))
 
-source('all_depts.R', local = TRUE)
-source('cohorts.R', local = TRUE)
-source('departments.R', local = TRUE)
-source('network_departments.R', local = TRUE)
-source('notes.R', local = TRUE)
-source('orders.R', local = TRUE)
-source('provs.R', local = TRUE)
-source('search_departments.R', local = TRUE)
+source('scripts/all_depts.R', local = TRUE)
+source('scripts/cohorts.R', local = TRUE)
+source('scripts/departments.R', local = TRUE)
+source('scripts/network_departments.R', local = TRUE)
+source('scripts/notes.R', local = TRUE)
+source('scripts/orders.R', local = TRUE)
+source('scripts/provs.R', local = TRUE)
+source('scripts/search_departments.R', local = TRUE)
 
 
 
