@@ -81,7 +81,7 @@ body <- dashboardBody(tabItems(
                     offset = 1,
                     width = 6,
                     textOutput('inst')),
-                img(src = "params.png", height = 500, width = 2???50)
+                img(src = "params.png", height = 500, width = 250)
             )),
 
     tabItem(tabName = 'deptsTab',
