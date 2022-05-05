@@ -4,7 +4,7 @@ suppressMessages(library(DBI))
 suppressMessages(library(RSQLite))
 suppressMessages(library(SqlRender))
 
-provs_sql <- function(depts, sql){
+att_provs_sql <- function(depts, sql){
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
   if (grepl("Oracle", sql, ignore.case = T)) {

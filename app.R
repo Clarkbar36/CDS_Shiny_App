@@ -13,19 +13,15 @@ suppressMessages(library(rsconnect))
 suppressMessages(library(purrr))
 suppressMessages(library(stringr))
 
-# list.files(path = 'C:/Users/aclark5/Desktop/CDS_App/Scripts/') %>%
-#     str_subset('\\.R') %>%
-#     walk(~source(.x,  local = TRUE))
-
-source('scripts/all_depts.R', local = TRUE)
-source('scripts/cohorts.R', local = TRUE)
-source('scripts/departments.R', local = TRUE)
-source('scripts/network_departments.R', local = TRUE)
-source('scripts/notes.R', local = TRUE)
-source('scripts/orders.R', local = TRUE)
-source('scripts/provs.R', local = TRUE)
-source('scripts/search_departments.R', local = TRUE)
-
+source('scripts/sql_help/all_depts.R', local = TRUE)
+source('scripts/sql_help/search_departments.R', local = TRUE)
+source('scripts/sql_help/network_departments.R', local = TRUE)
+source('scripts/parameters/departments.R', local = TRUE)
+source('scripts/parameters/notes.R', local = TRUE)
+source('scripts/parameters/orders.R', local = TRUE)
+source('scripts/parameters/att_provs.R', local = TRUE)
+source('scripts/cohort/base_cohort.R', local = TRUE)
+source('scripts/cohort/all_providers.R', local = TRUE)
 
 
 header <- dashboardHeader(title = "CDS SQL Code Creator")
@@ -38,26 +34,28 @@ sidebar <- dashboardSidebar(collapsed = FALSE,
                                     icon = icon("chart-line")
                                 ),
                                 menuItem(
-                                    "Table Creations",
-                                    tabName = "tableTab",
-                                    icon = icon("chart-line"),
-                                    startExpanded = TRUE,
-                                    menuSubItem('Department Creation',
+                                    'Department Upload',
                                                 tabName = 'deptsTab',
-                                                icon = icon('chart-line')),
-                                    menuSubItem('Attending Provider Creation',
+                                                icon = icon('chart-line')
+                                ),
+                                menuItem(
+                                    "Parameters",
+                                    tabName = "parTab",
+                                    icon = icon("chart-line"),
+                                    menuSubItem("SQL Code Creation",
+                                    tabName = "parameterTab",
+                                    icon = icon("chart-line"))
+                                ),
+                                menuItem(
+                                    "Cohort",
+                                    tabName = "cohTab",
+                                    icon = icon("chart-line"),
+                                    menuSubItem("SQL Code Creation",
+                                    tabName = "cohortTab",
+                                    icon = icon("chart-line")),
+                                    menuSubItem('Attending Provider Upload',
                                                 tabName = 'provTab',
                                                 icon = icon('chart-line'))
-                                ),
-                                menuItem(
-                                    "Parameter SQL Code Creation",
-                                    tabName = "parTab",
-                                    icon = icon("chart-line")
-                                ),
-                                menuItem(
-                                    "Cohort SQL Code Creation",
-                                    tabName = "cohortTab",
-                                    icon = icon("chart-line")
                                 ),
                                 menuItem(
                                     "Usage SQL Code Creation",
@@ -66,7 +64,12 @@ sidebar <- dashboardSidebar(collapsed = FALSE,
                                 )
                             ))
 
-body <- dashboardBody(tabItems(
+body <- dashboardBody(
+    tags$head(
+        tags$style(
+            "body {overflow-y: hidden;}"
+        )),
+    tabItems(
     tabItem(tabName = "instr",
             fluidRow(
                 column(
@@ -86,10 +89,16 @@ body <- dashboardBody(tabItems(
 
     tabItem(tabName = 'deptsTab',
             fluidRow(
-                column(h2("Departments", align = "center"),
+                column(
+                    align = "center",
+                    width = 3,
+                    offset = 4,
+                    h2('Departments Upload'))),
+            fluidRow(
+                column(h3("Departments", align = "center"),
                        width = 4,
                        offset = 1),
-                column(h2("Helper Queries", align = "center"),
+                column(h3("Helper Queries", align = "center"),
                        width = 4,
                        offset = 2)
             ),
@@ -152,17 +161,25 @@ body <- dashboardBody(tabItems(
                     width = 4,
                     offset = 1,
                 rHandsontableOutput("rTable"),
-                tags$style('#rTable * { word-wrap: break-word;}')),
+                tags$head(tags$style('#rTable * { word-wrap: break-word; max-height: 600px; max-width: 750px;}'))),
                 column(
                     align = "left",
                     width = 5,
                     offset = 2,
                     verbatimTextOutput("sqlhelp"),
                     tags$head(tags$style("#contents{color:black; font-size:12px;
-overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
-            ))),
+overflow-y:scroll; max-height: 100px; background: ghostwhite;}"))
+            ))
+            ),
 
-    tabItem(tabName = "parTab",
+    tabItem(tabName = "parameterTab",
+            fluidRow(
+                column(
+                    align = "center",
+                    width = 3,
+                    offset = 4,
+                    h2('Parameters SQL Creation'))),
+            br(),
             fluidRow(
                 column(
                     align = "center",
@@ -195,11 +212,18 @@ overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
                     offset = 1,
                     verbatimTextOutput("contents"),
                     tags$head(tags$style("#contents{color:black; font-size:12px;
-overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
+overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
 
                 )
             )),
     tabItem(tabName = 'cohortTab',
+            fluidRow(
+                column(
+                    align = "center",
+                    width = 3,
+                    offset = 4,
+                    h2('Cohort SQL Creation'))),
+            br(),
             fluidRow(
                 column(
                     align = "center",
@@ -217,7 +241,7 @@ overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
                     selectInput(
                         "querycoh",
                         "Select Which Query",
-                        c(Choose = '' , 'Cohort', 'Attending Providers', 'All Providers')
+                        c(Choose = '' , 'Cohort', 'All Providers')
                     )
                 ),br(),
                 column(align = "center",
@@ -232,11 +256,51 @@ overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
                     offset = 1,
                     verbatimTextOutput("contentscoh"),
                     tags$head(tags$style("#contentscoh{color:black; font-size:12px;
-overflow-y:scroll; max-height: 800px; background: ghostwhite;}"))
+overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
 
                 )
 
             )),
+    tabItem(tabName = 'provTab',
+            fluidRow(
+                column(
+                    align = "center",
+                    width = 3,
+                    offset = 4,
+                    h2('Attending Provider Upload'))),
+            fluidRow(
+                column(h3("Attending Providers", align = "center"),
+                       width = 4,
+                       offset = 1)),
+            fluidRow(
+                column(
+                    align = "center",
+                    width = 1,
+                    offset = 1,
+                    selectInput("inTypeprov", label = "Select Input Type", choices = c('Input', 'Upload'))),
+                # br(),
+                # column(width = 2,
+                #        downloadButton("downloadData", "Save Table")),
+                column(
+                    align = "center",
+                    width = 3,
+                    fileInput(
+                        "csvFileprov",
+                        "Upload Attending Provider File")),
+                #br(),
+                column(align = "center",
+                       width = 1,
+                       downloadButton("downloadDataprov", "Save Table"),
+                       style = "margin-top: 25px;")),
+            fluidRow(
+                # br(), br(),
+                column(
+                    width = 4,
+                    offset = 1,
+                    rHandsontableOutput("rTableprov"),
+                    tags$head(tags$style('#rTable * { word-wrap: break-word; max-height: 600px; max-width: 750px; overflow-y:scroll;}'))))
+            ),
+    
 
     tabItem(tabName = 'usageTab',
             fluidRow(
@@ -281,7 +345,7 @@ server <- function(input, output, session) {
         } else if (input$query == 'Orders') {
             orders_sql(hot_to_r(input$rTable), input$sql)
         } else if (input$query == 'Providers') {
-            provs_sql(hot_to_r(input$rTable), input$sql)
+            att_provs_sql(hot_to_r(input$rTable), input$sql)
         }  else {
             return('Wrong Inputs')
         }
@@ -311,8 +375,8 @@ server <- function(input, output, session) {
             return("Choose a Query")
         } else if (input$querycoh == 'Cohort') {
             cat(cohort_sql(hot_to_r(input$rTable), input$sqlcoh))
-        } else if (input$querycoh == 'Attending Providers') {
-          cat(provs_sql(hot_to_r(input$rTable), input$sqlcoh))
+        } else if (input$querycoh == 'All Providers') {
+          cat(all_provs_sql(hot_to_r(input$rTable), input$sqlcoh))
         }
         # else if (input$querycoh == 'All Providers') {
         #   cat(provs_sql(hot_to_r(input$rTable), input$sqlcoh))
@@ -410,14 +474,44 @@ server <- function(input, output, session) {
             write(help_query_out(), file)
         }
     )
-
-
-
-    output$plchlderUse <- renderText({
-        return(
-            "This tab will mirror the parameters tab, ask the user for SQL type, and which query to create, and it will spit out the Usage code."
-        )
+    
+    output$downloadDataprov <- downloadHandler(
+        filename = "attending_providers.csv",
+        content = function(file) {
+            write.csv(rTable_content_prov(), file, row.names = FALSE)
+        }
+    )
+    
+    rTable_content_prov <- reactive({
+        
+        if(input$inTypeprov == "Input"){
+            
+            DF_prov <- data.frame(providerID = as.integer(NA_integer_), userID = as.integer(NA_integer_), providerType = as.character(NA_character_), 
+                             providerName = as.character(NA_character_), deaprtmentGroup = as.character(NA_character_), departmentName = (NA_character_))
+        } else {
+            req(input$csvFileprov)
+            
+            DF_prov <- fread(input$csvFileprov$datapath)
+        }
+        
     })
+    
+    output$rTableprov <- renderRHandsontable({
+        
+        rhandsontable(
+            data = rTable_content_prov(),
+            rowHeaders = NULL,
+            contextMenu = TRUE,
+            width = 800,
+            height = 700) %>%
+            hot_cols(colWidths = c(90, 90, 110, 150, 150, 150),
+                     manualColumnMove = FALSE,
+                     manualColumnResize = TRUE,
+                     halign = 'htCenter',
+                     valign = 'htMiddle'
+            )
+    })
+
 }
 
 
