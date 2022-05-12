@@ -159,7 +159,7 @@ body <- dashboardBody(
                     offset = 2,
                     verbatimTextOutput("sqlhelp"),
                     tags$head(tags$style("#sqlhelp{color:black; font-size:12px;
-overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
+overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
             ))
             ),
 
@@ -203,7 +203,7 @@ overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
                     offset = 1,
                     verbatimTextOutput("contents"),
                     tags$head(tags$style("#contents{color:black; font-size:12px;
-overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
+overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
 
                 )
             )),
@@ -247,7 +247,7 @@ overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
                     offset = 1,
                     verbatimTextOutput("contentscoh"),
                     tags$head(tags$style("#contentscoh{color:black; font-size:12px;
-overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
+overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
 
                 )
 
