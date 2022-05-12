@@ -46,12 +46,13 @@ sidebar <- dashboardSidebar(collapsed = FALSE,
                                     menuSubItem('Attending Provider Upload',
                                                 tabName = 'provTab',
                                                 icon = icon('upload'))
-                                ),
-                                menuItem(
-                                    "Usage SQL Code Creation",
-                                    tabName = "usageTab",
-                                    icon = icon("layer-group")
                                 )
+                                # ,
+                                # menuItem(
+                                #     "Usage SQL Code Creation",
+                                #     tabName = "usageTab",
+                                #     icon = icon("layer-group")
+                                # )
                             ))
 
 body <- dashboardBody(
