@@ -171,7 +171,7 @@ server <- function(input, output, session) {
   
   output$downloadSQLcoh <- downloadHandler(
     filename = function() {
-      paste0(input$querycoh,".sql")
+      paste0(input$querycoh,"_Query_",input$sqlcoh,".sql")
     },
     content = function(file) {
       
