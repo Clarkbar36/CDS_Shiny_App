@@ -21,7 +21,7 @@ sidebar <- dashboardSidebar(collapsed = FALSE,
                                 menuItem(
                                     "Instructions",
                                     tabName = "instr",
-                                    icon = icon('readme')
+                                    icon = icon('file-alt')
                                 ),
                                 menuItem(
                                     'Department Upload',
