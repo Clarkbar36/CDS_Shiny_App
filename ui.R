@@ -14,43 +14,43 @@ suppressMessages(library(purrr))
 suppressMessages(library(stringr))
 
 
-header <- dashboardHeader(title = "CDS SQL Code Creator")
+header <- dashboardHeader(title = "CDS SQL")
 
 sidebar <- dashboardSidebar(collapsed = FALSE,
                             sidebarMenu(
                                 menuItem(
                                     "Instructions",
                                     tabName = "instr",
-                                    icon = icon("chart-line")
+                                    icon = icon('readme')
                                 ),
                                 menuItem(
                                     'Department Upload',
                                                 tabName = 'deptsTab',
-                                                icon = icon('chart-line')
+                                                icon = icon('upload')
                                 ),
                                 menuItem(
                                     "Parameters",
                                     tabName = "parTab",
-                                    icon = icon("chart-line"),
+                                    icon = icon("layer-group"),
                                     menuSubItem("SQL Code Creation",
                                     tabName = "parameterTab",
-                                    icon = icon("chart-line"))
+                                    icon = icon("code"))
                                 ),
                                 menuItem(
                                     "Cohort",
                                     tabName = "cohTab",
-                                    icon = icon("chart-line"),
+                                    icon = icon("layer-group"),
                                     menuSubItem("SQL Code Creation",
                                     tabName = "cohortTab",
-                                    icon = icon("chart-line")),
+                                    icon = icon("code")),
                                     menuSubItem('Attending Provider Upload',
                                                 tabName = 'provTab',
-                                                icon = icon('chart-line'))
+                                                icon = icon('upload'))
                                 ),
                                 menuItem(
                                     "Usage SQL Code Creation",
                                     tabName = "usageTab",
-                                    icon = icon("chart-line")
+                                    icon = icon("layer-group")
                                 )
                             ))
 
@@ -307,5 +307,5 @@ overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
 
 ))
 
-ui <- dashboardPage(title = 'CDS', header, sidebar, body, skin = 'purple')
+ui <- dashboardPage(title = 'CDS Code Creation Tool', header, sidebar, body, skin = 'purple')
 
