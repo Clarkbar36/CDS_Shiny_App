@@ -151,14 +151,15 @@ body <- dashboardBody(
                     width = 4,
                     offset = 1,
                 rHandsontableOutput("rTable"),
-                tags$head(tags$style('#rTable * { word-wrap: break-word; max-height: 600px; max-width: 750px;}'))),
+                tags$head(tags$style('#rTable * { word-wrap: break-word; max-height: 600px; max-width: 650px;}'))
+                ),
                 column(
                     align = "left",
                     width = 5,
                     offset = 2,
                     verbatimTextOutput("sqlhelp"),
-                    tags$head(tags$style("#contents{color:black; font-size:12px;
-overflow-y:scroll; max-height: 100px; background: ghostwhite;}"))
+                    tags$head(tags$style("#sqlhelp{color:black; font-size:12px;
+overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
             ))
             ),
 
@@ -288,7 +289,7 @@ overflow-y:scroll; max-height: 750px; background: ghostwhite;}"))
                     width = 4,
                     offset = 1,
                     rHandsontableOutput("rTableprov"),
-                    tags$head(tags$style('#rTable * { word-wrap: break-word; max-height: 600px; max-width: 750px; overflow-y:scroll;}'))))
+                    tags$head(tags$style('#rTableprov * { word-wrap: break-word; max-height: 600px; max-width: 750px;}'))))
             ),
     
 
