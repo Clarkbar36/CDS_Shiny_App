@@ -24,6 +24,11 @@ source('scripts/cohort/base_cohort.R', local = TRUE)
 source('scripts/cohort/all_providers.R', local = TRUE)
 
 server <- function(input, output, session) {
+  
+  output$all_steps_rmd <- renderUI({
+    tags$iframe(src='All_Steps.html',width="170%",frameBorder="0",height="900px")
+  })
+  
   rTable_content <- reactive({
     
     if(input$inType == "Input"){
@@ -33,25 +38,6 @@ server <- function(input, output, session) {
       req(input$csvFile)
       
       DF <- fread(input$csvFile$datapath)
-    }
-    
-  })
-  
-  sql_query_out <- reactive({
-    query_string <- if (input$sql == '') {
-      return('Choose SQL Type')
-    } else if (input$query == '') {
-      return("Choose a Query")
-    } else if (input$query == 'Departments') {
-      depts_sql(hot_to_r(input$rTable), input$sql)
-    } else if (input$query == 'Notes') {
-      notes_sql(hot_to_r(input$rTable), input$sql)
-    } else if (input$query == 'Orders') {
-      orders_sql(hot_to_r(input$rTable), input$sql)
-    } else if (input$query == 'Providers') {
-      att_provs_sql(hot_to_r(input$rTable), input$sql)
-    }  else {
-      return('Wrong Inputs')
     }
     
   })
@@ -72,7 +58,42 @@ server <- function(input, output, session) {
     
   })
   
+  output$parameters_rmd <- renderUI({
+    tags$iframe(src='parameters_overview.html',width="170%",frameBorder="0",height="900px")
+  })
+  
+  sql_query_out <- reactive({
+    tryCatch(
+    query_string <- if (input$sql == '') {
+      return('Choose SQL Type')
+    } else if (input$query == '') {
+      return("Choose a Query")
+    } else if (input$query == 'Departments') {
+      depts_sql(hot_to_r(input$rTable), input$sql)
+    } else if (input$query == 'Notes') {
+      notes_sql(hot_to_r(input$rTable), input$sql)
+    } else if (input$query == 'Orders') {
+      orders_sql(hot_to_r(input$rTable), input$sql)
+    } else if (input$query == 'Providers') {
+      att_provs_sql(hot_to_r(input$rTable), input$sql)
+    }  else {
+      return('Wrong Inputs')
+    },
+    
+    error = function(e){
+      return("Please create or upload a department file via the Establish Departments tab.")
+    }
+    
+    )
+    
+  })
+  
+  output$cohort_rmd <- renderUI({
+    tags$iframe(src='cohort_overview.html',width="170%",frameBorder="0",height="900px")
+  })
+  
   define_cohorts_query_out <- reactive({
+    tryCatch(
     query_string <- if (input$sqlcoh == '') {
       return('Choose SQL Type')
     } else if (input$querycoh == '') {
@@ -87,10 +108,19 @@ server <- function(input, output, session) {
     # }
     else {
       return('Wrong Inputs')
+    },
+    
+    error = function(e){
+      return("Please create or upload a department file via the Establish Departments tab.")
     }
+    
+    )
     
   })
   
+  output$dept_rmd <- renderUI({
+    tags$iframe(src='department_overview.html',width="170%",frameBorder="0",height="900px")
+  })
   
   output$rTable <- renderRHandsontable({
     

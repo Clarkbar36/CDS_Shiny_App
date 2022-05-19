@@ -1,0 +1,36 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<h2 style="text-align: center;"> Parameters SQL Creation Overview</h2>
+
+This page will generate queries for the user to use to get data about the encounters in the departments from the departments table and within the set time frame the departments were seeing pediatric patients. The results of these queries will be used to quality check the encounters to make sure proper time frames and departments are captured in the departments table. **The user might need to run the departments query first to find the proper information to fully complete the departments table.** Below is a more detailed overview of each SQL query. The user will need to save or copy out the SQL query and run in their own SQL client software. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Parts of Parameters SQL Creation Tab </h4>
+
+- **Select SQL Type:** The user will need to select which SQL type it's institution uses. This selection will transform the SQL query into the correct syntax needed to run the code in the user's SQL client software. 
+
+- **Select Which Query:** This will allow the user to choose which query to populate. For specific details, see below.
+
+- **Save SQL:** This button will save the current populated SQL code out to a .sql file.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Description of Parameter Queries </h4>
+
+
+
+- _Departments_: This query will return all encounters that were admitted or transferred into any non-periop department from the department table. This disregards time frame. This query can be used to determine the proper time frame to use, the results could be used to analyze the average age of the patients the unit has seen for different time periods. (More on this in future updates.)
+    
+- _Notes_: This query will return information on notes filled out for all encounters within the 'non-periop' departments and time frames in the departments table. These results will be used to determine who is filling out notes, and how notes are filled out. (More on this in future updates.)
+    
+- _Orders_: This query will return information on all orders for all encounters within the 'non-periop' departments and time frames in the departments table. These results will be be used to better understand who is requesting the orders, and what type of orders being completed for each encounter. (More on this in future updates.)
+    
+- _Providers_: This query will return all providers that touched a patients encounter, within the 'non-periop' departments and time frames in the departments table. The query will summarize the provider details over the time periods, this will be used as a reference point to make a list of attending providers for each unit and time frame. (More on this in the Cohort Overview.)

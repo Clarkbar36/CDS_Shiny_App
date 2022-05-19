@@ -1,0 +1,69 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<h2 style="text-align: center;"> Establish Departments Overview</h2>
+
+
+This page will assist with creating the department file. The department file is key to creating the SQL code in the app. The Department Upload tab will allow the user to create, save and load a .csv file containing the department information. The right hand side of the tab will allow the user to create helper queries. The goal of the department file is to list each pediatric ICU department file, along with associated preoperative departments, and the dates that the departments treated pediatric patients. Using the information supplied in the table, the subsequent queries will include the departments and time frames in the qualifying statements to reduce the results of the queries to only pertinent data. 
+
+<h4 style="text-align: center;font-weight: bold;"> Parts of Departments Upload Tab </h4>
+
+- **Select Input Type:** The user must designate how the department table will be fed into the application. _Input_ means the user will fill out the table within the application. _Upload_ means the user will upload a csv with the department information contained.
+
+- **Upload Department File:** Use the browse button to find the department file saved locally to upload into the application.
+
+- **Save Table:** Use this button to down a copy of the departments table that is created or modified within the application. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Description of SQL Helper Queries </h4>
+
+- **Select Which Query:** This will allow the user to choose which query to populate.
+
+    - _All Departments_: A query to return all active departments in EPIC.
+    
+    - _Search Specific Departments_: A query to return department information on department name(s) from the "Input Departments" box.
+    
+    - _Network Departments_: A query that will create a pseudo network based on the department names(s) in the "Input Departments" box. The query will look at all encounters that touched the department(s) given in the "Input Departments" box and then gather what other departments those patients touched during their encounter and summarize the departments.
+
+- **Input Departments (Comma Separated):** This is a free text box, the user can put in the EPIC department name for the departments they want to search for. If multiple departments are needed, please separate with a comma and space (e.g. dept 1, dept 2). These departments will be placed in which ever SQL query the user selects, if the query requires a department. 
+
+- **Save SQL:** This button will save the current populated SQL code out to a .sql file.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Description of Departments Table </h4>
+
+- **departmentGroup:** This is a user created field. A general grouping for the departments. This must include a "PERIOP" grouping, we recommend the other groupings be "PICU" and associated "PICU" grouping names.
+
+- **departmentID:** This field is from EPIC, these IDs can be found using the helper queries on the tab. The EPIC department id from INI: DEP .1. The ID should be for the specific unit.
+
+- **openDate:** This field is the date the unit _started_ seeing pediatric patients. Or if the unit was seeing pediatric patients for the full time frame that you are querying, then the openDate would be the first day of your query window.
+
+- **closeDate:** This field is the date the unit _stopped_ seeing pediatric patients. Or if the unit was seeing pediatric patients for the full time frame that you are querying, then the closeDate would be the last day of your query window.
+
+- **displayName:** This is a user created field. This field is for the use to recognize which department is which. Understanding that the department ID is usually not enough for a user to recognize what unit is in the query. This is a healper field for the name of the department. 
+
+This is a very quick example of what a department table could look like:
+
+| **departmentGroup** | **departmentID** | **openDate** | **closeDate** | **displayName** |
+|:---:|:---:|:---:|:---:|:---:|
+| PCICU | 151503009 | 1/1/2016 | 10/1/2017 | 7-4900 |
+| PCICU | 151503036 | 9/1/2017 | 1/1/2018 | CH 7E |
+| PICU | 151503014 | 1/1/2016 | 10/1/2017 | 9-5200 |
+| PICU | 151503034 | 9/1/2017 | 1/1/2018 | CH 8W |
+| PERIOP | 151503048 | 1/1/2016 | 1/1/2018 | OPERATING ROOM |
+| PERIOP | 151503038 | 1/1/2016 | 1/1/2018 | PEDS CATH/EP LABS |
+| PERIOP | 151503040 | 1/1/2016 | 1/1/2018 | HPS |
+| PERIOP | 151502298 | 1/1/2016 | 1/1/2018 | CH OPERATING ROOM |
+| PERIOP | 151501558 | 1/1/2016 | 1/1/2018 | SDAU |
+| PERIOP | 151501557 | 1/1/2016 | 1/1/2018 | PACU |
+| PERIOP | 151503042 | 1/1/2016 | 1/1/2018 | CHGI |
+
+

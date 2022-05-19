@@ -1,0 +1,60 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<h2 style="text-align: center;"> Cohort SQL Creation Overview</h2>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Parts of Cohort SQL Creation Tab </h4>
+
+- **Select SQL Type:** The user will need to select which SQL type it's institution uses. This selection will transform the SQL query into the correct syntax needed to run the code in the user's SQL client software. 
+
+- **Select Which Query:** This will allow the user to choose which query to populate. For specific details, see below.
+
+- **Save SQL:** This button will save the current populated SQL code out to a .sql file.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Description of Cohort Queries </h4>
+
+
+
+- _Cohort_: This query will find all patient encounters within the departments and time frame for 'non-periop' departments from the departments table. The results will return encounters at an "Event_ID" level, that is an ICU admission level. There can be multiple ICU admissions per patient encounter. This query will be the basis for just about the rest of the queries going forward as this is our full cohort of ICU encounters. 
+    
+- _All Providers_: This query will find all users who accessed a patients chart from our cohort base. The access time will be within the time the patient was on the ICU unit. Then the query rolls up the user and returns a foriegn key table to be used later in the process. 
+    
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<h4 style="text-align: center;font-weight: bold;"> Description of Attending Providers Table </h4>
+
+This table will be later in the process to qualify other scripts. The table should contain just attending providers for the ICU departments within the proper time frame. All fields can be found from the _Providers_ query that was run from the *Parameters* tab.
+
+- **providerID:** This is EPIC's provider ID for the provider. (EPT 18864)
+
+- **userID:** This is EPIC's user ID for the provider. (EMP .1)
+
+- **providerType:** This is EPIC's type for the provider. (SER 1040)
+
+- **providerName:** This is EPIC's name for the provider. (SER .2)
+
+- **departmentGroup:** This is a grouping for the provider. This can be found from the _Providers_ query, typically this is found in one of hte "RPT_GRP_XX" fileds. This field should be a roll-up of department/unit. 
+
+- **departmentName:** This is a department for the provider. This can be found from the _Providers_ query, typically this is found in one of hte "RPT_GRP_XX" fileds. 
+
+This is a very quick example of what an attending provider table could look like:
+
+| **providerID** | **userID** | **providerType** | **providerName** | **departmentGroup** | **departmentName** |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 12657 | 6714 | Physician | SULLIVAN, JEFFREY | Pediatrics: Critical Care | IP PEDS SEDATION |
+| 96478 | 6391 | Physician | MURPHY, COURTNEY | Pediatrics: Critical Care | PEDS SEDATION |
+| 67214 | 9881 | Physician | RODRIGUEZ, LISA | Pediatrics: Hospitalists | 49300 |
+| 349761 | 5470 | Physician | PHILLIPS, DOMINIC | Pediatrics: Critical Care | PEDS CARDIOLOGY |

@@ -1,0 +1,33 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<h3 style="text-align: center;font-weight: bold;"> About The Application </h3>
+
+This application will assist users in creating standardized SQL code to query EPIC and pull data associated with PICU encounters. The goal of these data pulls are to gather information on these encounters and specifically the clinical decision support tools used throughout the encounter. This application will walk the user through creating the department table, then pull data to do quality checks on to ensure the department table is correct (parameters), from there the application will help create the cohort that will be used as the basis for the usage of clinical decision tools. 
+
+<h3 style="text-align: center;font-weight: bold;"> Steps </h3>  
+
+
+<h4 style="text-align: center;font-weight: bold;"> 1.Establish Departments </h4>
+This tab will help the user create the department file. This file is the driver for this whole process. The file contains pertinent information on the pediatric ICU's as well as all of the preoperative departments. Please see the "Overview" tab under "Establish Departments" for a detailed explanation of the fields required and how to fill in the table. This tab will also let the user save out a department table if created in app, or load in a department file if the user have previously created a department table. This table is used throughout the application and is used to qualify the SQL scripts to make sure the scripts will only capture information surrounding the pediatric ICU's encounters.
+
+
+<h4 style="text-align: center;font-weight: bold;">  2.Parameters </h4>
+The parameter queries will gather all data for the departments supplied in the department table. The results of these queries will be used to do a quality check and ensure the proper departments and time frames are captured in the department table. (Quality check workflow is a work in progress).
+
+This tab will utilize the department table created or uploaded in the "Establish Departments" tab. The user will select the SQL type their institution uses, then select which query they would like to generate. For a detailed overview of each query, please see the "Overview" tab under "Parameters". After selecting the SQL type and the desired query, the user will be able to highlight, copy and paste out the SQL code or the user can click the "Save SQL" button to save the SQL code locally. Once the code is saved, the user will need to open the code in their SQL client software and run the code from there. Save the results out to a folder that will need to be accessed later for quality control. 
+
+<h4 style="text-align: center;font-weight: bold;">  3.Cohort </h4>
+The Cohort queries will gather data on the cohort designated based on the department table, all encounters in the non-periop departments within the time frames those departments were in use for pediatric care. 
+
+This tab will again use the department table created or uploaded in the "Establish Departments" tab. The user will select the SQL type their institution uses, then select which query they would like to generate. For a detailed overview of each query, please see the "Overview" tab under "Cohort". After selecting the SQL type and the desired query, the user will be able to highlight, copy and paste out the SQL code or the user can click the "Save SQL" button to save the SQL code locally. Once the code is saved, the user will need to open the code in their SQL client software and run the code from there. Save the results out to a folder that will need to be accessed later for quality control. 
+
+<h5 style="text-align: center;font-weight: bold;">  3a.Attending Provider Upload </h5> 
+
+This table will help the user create or upload all of the attending providers within the departments and time frame. The attending providers can be found using the results from the "Providers" query on the "Parameters" tab. The "Providers" query will return all providers who have touched a patient encounter. From this list, using knowledge of the units, the user should be able to pick out which which providers are attending from that list. From there the user can fill those names into the table in the app, on the "Attending Provider Upload" tab. This tab allows you to save the table, add to the table or upload a table. For more details on this tab see the "Overview" tab under "Cohort".
+

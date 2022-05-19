@@ -19,19 +19,28 @@ header <- dashboardHeader(title = "CDS SQL")
 sidebar <- dashboardSidebar(collapsed = FALSE,
                             sidebarMenu(
                                 menuItem(
-                                    "Instructions",
-                                    tabName = "instr",
+                                    "Steps Overview",
+                                    tabName = "sbs",
                                     icon = icon('file-alt')
                                 ),
                                 menuItem(
-                                    'Department Upload',
+                                    'Establish Departments',
+                                                tabName = 'estDept',
+                                                icon = icon('file-alt'),
+                                    menuSubItem("Overview",
+                                                tabName = "dptOvr",
+                                                icon = icon('file-alt')),
+                                    menuSubItem('Departments File Creation',
                                                 tabName = 'deptsTab',
-                                                icon = icon('upload')
+                                                icon = icon('upload'))
                                 ),
                                 menuItem(
                                     "Parameters",
                                     tabName = "parTab",
                                     icon = icon("layer-group"),
+                                    menuSubItem("Overview",
+                                                tabName = "parOvr",
+                                                icon = icon('file-alt')),
                                     menuSubItem("SQL Code Creation",
                                     tabName = "parameterTab",
                                     icon = icon("code"))
@@ -40,6 +49,9 @@ sidebar <- dashboardSidebar(collapsed = FALSE,
                                     "Cohort",
                                     tabName = "cohTab",
                                     icon = icon("layer-group"),
+                                    menuSubItem("Overview",
+                                                tabName = "cohOvr",
+                                                icon = icon('file-alt')),
                                     menuSubItem("SQL Code Creation",
                                     tabName = "cohortTab",
                                     icon = icon("code")),
@@ -61,23 +73,22 @@ body <- dashboardBody(
             "body {overflow-y: hidden;}"
         )),
     tabItems(
-    tabItem(tabName = "instr",
+    tabItem(tabName = "sbs",
             fluidRow(
-                column(
-                    align = "center",
-                    offset = 1,
-                    width = 6,
-                    h2("Instructions"))
+                column(width = 6,
+                       offset = 1,
+                       uiOutput('all_steps_rmd'),
+                )
+                )
             ),
-            # fluidRow(
-            #     column(
-            #         align = "center",
-            #         offset = 1,
-            #         width = 6,
-            #         textOutput('inst')),
-            #     img(src = "params.png", height = 500, width = 250)
-            # )
-            ),
+    tabItem(tabName = 'dptOvr',
+            fluidRow(
+                column(width = 6,
+                       offset = 1,
+                       uiOutput('dept_rmd'),
+                )
+            )
+    ),
 
     tabItem(tabName = 'deptsTab',
             fluidRow(
@@ -85,7 +96,7 @@ body <- dashboardBody(
                     align = "center",
                     width = 3,
                     offset = 4,
-                    h2('Departments Upload'))),
+                    h2('Department Upload'))),
             fluidRow(
                 column(h3("Departments", align = "center"),
                        width = 4,
@@ -164,7 +175,14 @@ body <- dashboardBody(
 overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
             ))
             ),
-
+    tabItem(tabName = "parOvr",
+            fluidRow(
+                column(width = 6,
+                       offset = 1,
+                       uiOutput('parameters_rmd'),
+                )
+            )
+    ),
     tabItem(tabName = "parameterTab",
             fluidRow(
                 column(
@@ -209,6 +227,14 @@ overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
 
                 )
             )),
+    tabItem(tabName = "cohOvr",
+            fluidRow(
+                column(width = 6,
+                       offset = 1,
+                       uiOutput('cohort_rmd'),
+                )
+            )
+    ),
     tabItem(tabName = 'cohortTab',
             fluidRow(
                 column(
@@ -263,13 +289,14 @@ overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
                     h2('Attending Provider Upload'))),
             fluidRow(
                 column(h3("Attending Providers", align = "center"),
-                       width = 4,
-                       offset = 1)),
+                       width = 3,
+                       offset = 4)),
+            br(),
             fluidRow(
                 column(
                     align = "center",
                     width = 1,
-                    offset = 1,
+                    offset = 3,
                     selectInput("inTypeprov", label = "Select Input Type", choices = c('Input', 'Upload'))),
                 # br(),
                 # column(width = 2,
@@ -288,10 +315,10 @@ overflow-y:scroll; max-height: 700px; background: ghostwhite;}"))
             fluidRow(
                 # br(), br(),
                 column(
-                    width = 4,
-                    offset = 1,
+                    width = 8,
+                    offset = 3,
                     rHandsontableOutput("rTableprov"),
-                    tags$head(tags$style('#rTableprov * { word-wrap: break-word; max-height: 600px; max-width: 750px;}'))))
+                    tags$head(tags$style('#rTableprov * { word-wrap: break-word; max-height: 670px; max-width: 950px;}'))))
             ),
 
 
