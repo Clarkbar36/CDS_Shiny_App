@@ -29,9 +29,9 @@ server <- function(input, output, session) {
   output$help <- renderUI({
     tagList(url) })
   
-  git_url <- a("Repository", href="https://github.com/Clarkbar36/CDS_Shiny_App")
+  git_url <- a("Github Repository", href="https://github.com/Clarkbar36/CDS_Shiny_App", target="_blank")
   output$git <- renderUI({
-    tagList("Github:", git_url) })
+    tagList(git_url) })
   
   output$all_steps_rmd <- renderUI({
     tags$iframe(src='All_Steps.html',width="170%",frameBorder="0",height="900px")
