@@ -14,7 +14,16 @@ suppressMessages(library(purrr))
 suppressMessages(library(stringr))
 
 
-header <- dashboardHeader(title = "CDS SQL")
+header <- dashboardHeader(title = "CDS SQL",
+                          dropdownMenu(type = "messages",
+                                       notificationItem(
+                                           uiOutput("help"),
+                                           icon("inbox")
+                                       ),
+                                       notificationItem(
+                                           uiOutput("git"),
+                                           icon("github")
+                                       )))
 
 sidebar <- dashboardSidebar(collapsed = FALSE,
                             sidebarMenu(

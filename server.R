@@ -25,6 +25,14 @@ source('scripts/cohort/all_providers.R', local = TRUE)
 
 server <- function(input, output, session) {
   
+  url <- a("Questions or Issues", href="mailto:alex_clark@urmc.rochester.edu; Adam_Dziorny@URMC.Rochester.edu")
+  output$help <- renderUI({
+    tagList(url) })
+  
+  git_url <- a("Repository", href="https://github.com/Clarkbar36/CDS_Shiny_App")
+  output$git <- renderUI({
+    tagList("Github:", git_url) })
+  
   output$all_steps_rmd <- renderUI({
     tags$iframe(src='All_Steps.html',width="170%",frameBorder="0",height="900px")
   })
