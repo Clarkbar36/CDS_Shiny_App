@@ -28,7 +28,7 @@ header <- dashboardHeader(title = "CDS SQL",
 sidebar <- dashboardSidebar(collapsed = FALSE,
                             sidebarMenu(
                                 menuItem(
-                                    "Steps Overviewsss",
+                                    "Steps Overview",
                                     tabName = "sbs",
                                     icon = icon('file-alt')
                                 ),
