@@ -41,7 +41,12 @@ server <- function(input, output, session) {
     
     if(input$inType == "Input"){
       
-      DF <- data.frame(departmentGroup = as.character(NA_character_), departmentID = as.integer(NA_integer_), openDate = as.character(NA_character_), closeDate = as.character(NA_character_), displayName = as.character(NA_character_))
+      DF <- data.frame(departmentGroup = as.character(NA_character_), 
+                       departmentID = as.integer(NA_integer_), 
+                       openDate = as.character(NA_character_), 
+                       closeDate = as.character(NA_character_), 
+                       displayName = as.character(NA_character_),
+                       stringsAsFactors = FALSE)
     } else {
       req(input$csvFile)
       
