@@ -131,7 +131,7 @@ server <- function(input, output, session) {
   })
   
   output$rTable <- renderRHandsontable({
-    Sys.sleep(2)
+
     rhandsontable(
       data = rTable_content(),
       rowHeaders = NULL,
@@ -229,8 +229,12 @@ server <- function(input, output, session) {
     
     if(input$inTypeprov == "Input"){
       
-      DF_prov <- data.frame(providerID = as.integer(NA_integer_), userID = as.integer(NA_integer_), providerType = as.character(NA_character_), 
-                            providerName = as.character(NA_character_), deaprtmentGroup = as.character(NA_character_), departmentName = (NA_character_))
+      DF_prov <- data.frame(providerID = as.integer(NA_integer_), 
+                            userID = as.integer(NA_integer_), 
+                            providerType = c(NA_character_),
+                            providerName = as.character(NA_character_), 
+                            deaprtmentGroup = as.character(NA_character_), 
+                            departmentName = as.character(NA_character_))
     } else {
       req(input$csvFileprov)
       
