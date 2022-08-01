@@ -131,7 +131,7 @@ server <- function(input, output, session) {
   })
   
   output$rTable <- renderRHandsontable({
-    
+    Sys.sleep(2)
     rhandsontable(
       data = rTable_content(),
       rowHeaders = NULL,
@@ -139,6 +139,7 @@ server <- function(input, output, session) {
       width = 900,
       height = 900) %>%
       hot_col(c("openDate","closeDate"),  dateFormat = "M/D/YYYY", type = "date") %>%
+      hot_col(c("departmentGroup","departmentID"), allowInvalid = TRUE, default = "N/A") %>%
       hot_cols(colWidths = c(130, 110, 110, 110, 130),
                manualColumnMove = FALSE,
                manualColumnResize = TRUE,
