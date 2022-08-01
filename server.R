@@ -139,7 +139,7 @@ server <- function(input, output, session) {
       width = 900,
       height = 900) %>%
       hot_col(c("openDate","closeDate"),  dateFormat = "M/D/YYYY", type = "date") %>%
-      hot_col(c("departmentGroup","departmentID"), allowInvalid = TRUE, default = "N/A") %>%
+      hot_col(c("departmentGroup","departmentID"), strict = FALSE) %>%
       hot_cols(colWidths = c(130, 110, 110, 110, 130),
                manualColumnMove = FALSE,
                manualColumnResize = TRUE,
@@ -231,10 +231,11 @@ server <- function(input, output, session) {
       
       DF_prov <- data.frame(providerID = as.integer(NA_integer_), 
                             userID = as.integer(NA_integer_), 
-                            providerType = c(NA_character_),
+                            providerType = as.character(NA_character_),
                             providerName = as.character(NA_character_), 
                             deaprtmentGroup = as.character(NA_character_), 
-                            departmentName = as.character(NA_character_))
+                            departmentName = as.character(NA_character_),
+                            stringsAsFactors = FALSE)
     } else {
       req(input$csvFileprov)
       
